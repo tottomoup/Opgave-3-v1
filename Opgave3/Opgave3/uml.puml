@@ -1,0 +1,54 @@
+@startuml
+rectangle Opgave3{
+  class DirectDemocracySystem {
+    - List<Citizen> _citizens
+    - List<Proposal> _proposals
+    + DirectDemocracySystem()
+    + void RegisterCitizen(Citizen citizen)
+    + void RemoveCitizen(Citizen citizen)
+    + void AuthenticateCitizen(Citizen citizen)
+    + List<Proposal> GetProposals()
+    + void SubmitProposal(Proposal proposal)
+    + void VoteOnProposal(Vote vote)
+  }
+
+  class Citizen {
+    - string _name
+    - int _age
+    - string _address
+    - string _MitID
+    - DirectDemocracySystem _system
+    + Citizen(string name, int age, string address, string MitID)
+    + void Register(DirectDemocracySystem system)
+    + void CastVote(Vote vote)
+  }
+
+  class Proposal {
+    - string _title
+    - string _description
+    - Citizen _proposer
+    - List<Vote> _votes
+    - int _requiredVotes
+    + Proposal(string title, string description, int requiredVotes, Citizen proposer)
+    + void AddVote(Vote vote)
+    + bool IsPassed()
+  }
+
+  class Vote {
+    - Proposal _proposal
+    - Citizen _voter
+    - bool _choice
+    + Vote(Proposal proposal, Citizen voter, bool choice)
+    + bool GetChoice()
+    + Citizen GetCitizen()
+    + Proposal GetProposal()
+  }
+
+  DirectDemocracySystem -- Citizen
+  DirectDemocracySystem -- Proposal
+  DirectDemocracySystem -- Vote
+  Citizen -- Vote
+  Proposal - Vote
+  Citizen -- Proposal
+}
+@enduml
